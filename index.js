@@ -2,6 +2,7 @@
 // import exphbs from 'express-handlebars';
 
 // index.js
+const XLSX = require('xlsx');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
@@ -36,15 +37,12 @@ app.post('/add-user', (req, res) => {
 });
 
 app.post('/assign-task', function (req, res) {
-  // Collect task details from request
-  var user_id = req.body.user_id;
-  var task_name = req.body.task_name;
-  var task_type = req.body.task_type;
+  const { name, task} = req.body;
+  const query = `INSERT INTO tasks (name, task_name) VALUES ('${name}', '${task}')`;
 
-  // Insert task details into tasks table
-  connection.query('INSERT INTO tasks (user_id, task_name, task_type) VALUES (?, ?, ?)', [user_id, task_name, task_type], function (error, results, fields) {
+  connection.query(query, (error, results) => {
     if (error) throw error;
-    res.send('Task assigned succesfully successfully');
+    res.send('task added successfully');
   });
 });
 
@@ -63,6 +61,8 @@ const connection = mysql.createConnection({
   password: '123456789',
   database: 'task_app'
 });
+
+
 
 // Connect to the database
 connection.connect((err) => {
