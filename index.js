@@ -8,21 +8,22 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 
 const app = express();
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Define the root route
 app.get('/', (req, res) => {
-  res.sendFile(__dirname+'/home.html');
+  res.sendFile(__dirname+'/Public/home.html');
 });
 
 // Define the add-user route
 app.get('/add-user', (req, res) => {
-  res.sendFile(__dirname+'/add-user.html');
+  res.sendFile(__dirname+'/Public/add-user.html');
 });
 
 // Define the assign-task route
 app.get('/assign-task', (req, res) => {
-  res.sendFile(__dirname+'/assign-task.html');
+  res.sendFile(__dirname+'/Public/assign-task.html');
 });
 
 
